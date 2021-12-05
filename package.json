@@ -1,0 +1,23 @@
+{
+  "name": "rs-playlist-manager",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node index.ts",
+    "start": "node .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kirin Patel <kirinpatel@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node-fetch": "^3.0.3",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.2"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.5",
+    "puppeteer": "^12.0.1"
+  }
+}
