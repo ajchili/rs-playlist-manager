@@ -3,6 +3,7 @@ import PlaylistManager from './PlaylistManager';
 import type { Playlist, Song } from '../types';
 
 type ViewerRequestStatistics = {
+  lastRequestPlayed: number;
   numOfRequestsPlayed: number;
   songsInQueue: Set<number>;
 };
@@ -43,8 +44,10 @@ export default class CyclicalPlaylistManager extends PlaylistManager {
         const bFirstSongId = Array.from(b.songsInQueue.keys())[0];
         return aFirstSongId - bFirstSongId;
       }
-      // Sort by least amount of plays if number of plays is not equal
-      return a.numOfRequestsPlayed - b.numOfRequestsPlayed;
+      // Sort by last played request if number of plays are not equal, we can
+      // skip a comparison against the number of plays since we set
+      // lastRequestPlayed to -1 during initialization
+      return a.lastRequestPlayed - b.lastRequestPlayed;
     });
   }
 
@@ -59,6 +62,7 @@ export default class CyclicalPlaylistManager extends PlaylistManager {
       const viewer = song.viewer;
       if (!this.viewerRequestData[viewer.twitch_id]) {
         this.viewerRequestData[viewer.twitch_id] = {
+          lastRequestPlayed: -1,
           numOfRequestsPlayed: 0,
           songsInQueue: new Set(),
         };
@@ -112,6 +116,8 @@ export default class CyclicalPlaylistManager extends PlaylistManager {
 
   private finishCurrentSong() {
     const viewer = this.currentSong.viewer;
+    this.viewerRequestData[viewer.twitch_id].lastRequestPlayed =
+      this.currentSong.id;
     this.viewerRequestData[viewer.twitch_id].numOfRequestsPlayed++;
     this.viewerRequestData[viewer.twitch_id].songsInQueue.delete(
       this.currentSong.id
