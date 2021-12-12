@@ -1,6 +1,6 @@
-export type Playlist = Song[];
+declare type Playlist = Song[];
 
-export type Song = {
+declare type Song = {
   id: number;
   vip: boolean;
   position: number;
@@ -11,7 +11,7 @@ export type Song = {
   dlc_set: DLC[];
 };
 
-export type Viewer = {
+declare type Viewer = {
   username: string;
   twitch_id: number;
   badges: string[];
@@ -20,7 +20,7 @@ export type Viewer = {
   inactive_time: number;
 };
 
-export type DLC = {
+declare type DLC = {
   id: number;
   cdlc_id: number;
   artist: string;

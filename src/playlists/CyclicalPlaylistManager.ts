@@ -1,8 +1,6 @@
 import PlaylistManager from './PlaylistManager';
 import { PriorityQueue } from '../utils/PriorityQueue';
 
-import type { Playlist, Song } from '../types';
-
 type ViewerRequestStatistics = {
   lastRequestPlayed: number;
   numOfRequestsPlayed: number;
