@@ -57,19 +57,24 @@ export default abstract class PlaylistManager {
     }, this.authenticationRefreshInterval);
   }
 
+  private async getPlaylist(): Promise<Playlist> {
+    try {
+      const response = await fetch(
+        `${RS_PLAYLIST_URL}ajax/playlist.php?channel=${this.username}`
+      );
+      const text = await response.text();
+      return JSON.parse(text)['playlist'];
+    } catch (err) {
+      console.log('Unable to update playlist!');
+      console.error(err);
+      return [];
+    }
+  }
+
   private startPlaylistWatcherLoop(): void {
     setInterval(async () => {
-      try {
-        const response = await fetch(
-          `${RS_PLAYLIST_URL}ajax/playlist.php?channel=${this.username}`
-        );
-        const text = await response.text();
-        this.playlist = JSON.parse(text)['playlist'];
-        this.onPlaylistUpdate(this.playlist);
-      } catch (err) {
-        console.log('Unable to update playlist!');
-        console.error(err);
-      }
+      this.playlist = await this.getPlaylist();
+      this.onPlaylistUpdate(this.playlist);
     }, this.playlistRefreshInterval);
   }
 
