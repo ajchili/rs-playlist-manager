@@ -1,4 +1,5 @@
 import axios from "axios";
+import { BrowserWindow } from "electron";
 
 import { RS_PLAYLIST_URL } from '../utils/constants';
 
@@ -9,9 +10,11 @@ export interface PlaylistManagerOptions {
 
 // TODO: Make class more abstract and clean
 export default abstract class PlaylistManager {
+  private manipulitableWindow = new BrowserWindow({ width: 0, height: 0, show: false })
   private readonly playlistRefreshInterval: number;
   private channel: string;
   private playlist: Playlist = [];
+  private interval: NodeJS.Timer;
 
   constructor(
     options: PlaylistManagerOptions
@@ -22,16 +25,24 @@ export default abstract class PlaylistManager {
     } = options;
     this.channel = channel
     this.playlistRefreshInterval = playlistRefreshInterval;
-    this.startPlaylistWatcherLoop();
+    this.interval = this.startPlaylistWatcherLoop();
+  }
+
+  public close() {
+    this.manipulitableWindow.close();
+    clearInterval(this.interval);
+  }
+
+  protected abstract onPlaylistUpdate(playlist: Playlist): Promise<void>;
+
+  protected async updateSongOrder(id: number, pos: number): Promise<void> {
+    await this.manipulitableWindow.loadURL(`${RS_PLAYLIST_URL}ajax/requests.php?action=move-request&id=${id}&pos=${pos}&channel=${this.channel}`)
   }
 
   private async getPlaylist(): Promise<Playlist> {
     try {
-      const response = await fetch(
-        `${RS_PLAYLIST_URL}ajax/playlist.php?channel=${this.channel}`
-      );
-      const text = await response.text();
-      return JSON.parse(text)['playlist'];
+      const request = await axios.get(`${RS_PLAYLIST_URL}ajax/playlist.php?channel=${this.channel}`);
+      return request.data['playlist'];
     } catch (err) {
       console.log('Unable to update playlist!');
       console.error(err);
@@ -39,18 +50,10 @@ export default abstract class PlaylistManager {
     }
   }
 
-  private startPlaylistWatcherLoop(): void {
-    setInterval(async () => {
+  private startPlaylistWatcherLoop(): NodeJS.Timer {
+    return setInterval(async () => {
       this.playlist = await this.getPlaylist();
       this.onPlaylistUpdate(this.playlist);
     }, this.playlistRefreshInterval);
-  }
-
-  protected abstract onPlaylistUpdate(playlist: Playlist): Promise<void>;
-
-  protected async updateSongOrder(id: number, pos: number): Promise<void> {
-    // await this.page.goto(
-    //   `${RS_PLAYLIST_URL}ajax/requests.php?action=move-request&id=${id}&pos=${pos}&channel=${this.username}`
-    // );
   }
 }

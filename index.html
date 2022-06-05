@@ -10,33 +10,7 @@
 
 <body>
     <h1>RS Playlist Manager</h1>
-    <h3></h3>
-    <button onclick="test()">Click me</button>
-
-    <script>
-        const a = localStorage.getItem("queue")
-        let playlist = [];
-
-        const getPlaylist = async () => {
-            const response = await fetch("https://rsplaylist.com/ajax/playlist.php?channel=ajchili");
-            const text = await response.text();
-            return JSON.parse(text)['playlist'];
-        }
-
-        const test = async () => {
-            try {
-                const playlist = await getPlaylist();
-                window.location.href = `https://rsplaylist.com/ajax/requests.php?action=move-request&id=${playlist[1].id}&pos=1&channel=ajchili`
-            } catch (err) {
-                console.error(err)
-            }
-        }
-
-        setInterval(async () => {
-            playlist = await getPlaylist();
-            console.log(playlist);
-        }, 1000);
-    </script>
+    <h3>There will be more here soon!</h3>
 </body>
 
 </html>

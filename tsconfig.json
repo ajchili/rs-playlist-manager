@@ -13,6 +13,7 @@
     "target": "esnext"
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "index.html"
   ]
 }
