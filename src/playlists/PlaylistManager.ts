@@ -1,4 +1,5 @@
 import * as puppeteer from 'puppeteer';
+// @ts-ignore
 import fetch from 'node-fetch';
 
 import BrowserHandler from '../puppeteer/BrowserHandler';

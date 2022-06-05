@@ -1,16 +1,18 @@
 {
   "compilerOptions": {
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "sourceMap": true,
     "outDir": "dist",
     "baseUrl": ".",
-    "moduleResolution": "node",
+    "paths": {
+      "*": [
+        "node_modules/*"
+      ]
+    },
     "target": "esnext"
   },
-  "exclude": [
-    "node_modules"
-  ],
   "include": [
-    "index.ts",
-    "src/**/*.ts",
-    "src/**/*.d.ts"
+    "src/**/*"
   ]
 }
