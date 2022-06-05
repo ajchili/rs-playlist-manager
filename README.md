@@ -2,6 +2,11 @@
 
 The RS Playlist Manager is a NodeJS application that was built to automatically sort viewer requests to reduce strain on streamers and their moderators.
 
+## TODO:
+
+- [ ] Add React
+- [ ] Create artifact
+
 ## Restrictions
 
 - This application is only **semi-automated**. Each launch of the application requires authentication.

@@ -1,11 +1,8 @@
-const { app, BrowserWindow } = require('electron')
-
-let channel: string | undefined;
+import { app, BrowserWindow } from 'electron'
+import CyclicalPlaylistManager from './playlists/CyclicalPlaylistManager'
 
 const createWindow = () => {
-    const applicationWindow = new BrowserWindow({ width: 800, height: 800 })
-    applicationWindow.hide()
-
+    const applicationWindow = new BrowserWindow({ width: 800, height: 800, show: false })
     applicationWindow.loadFile("./index.html")
     applicationWindow.webContents.on("did-navigate", (_: any, url: string) => {
         if (url.includes("move-request")) {
@@ -13,13 +10,12 @@ const createWindow = () => {
         }
     })
 
-    const playlistWindow = new BrowserWindow({ width: 800, height: 800 })
-    playlistWindow.hide()
+    const playlistWindow = new BrowserWindow({ width: 800, height: 800, show: false })
     playlistWindow.loadURL("https://rsplaylist.com/")
     playlistWindow.webContents.on("did-navigate", () => {
         playlistWindow.webContents.executeJavaScript("document.querySelector('div.twitch-login-user').innerText").then((user: string) => {
             if (user) {
-                channel = user;
+                new CyclicalPlaylistManager({ channel: user });
                 playlistWindow.close()
                 applicationWindow.show()
             } else {
