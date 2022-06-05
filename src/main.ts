@@ -1,22 +1,15 @@
-import { app, BrowserWindow } from 'electron'
-import CyclicalPlaylistManager from './playlists/CyclicalPlaylistManager'
+import { app } from 'electron'
+import ApplicationWindow from './windows/ApplicationWindow'
+import RSPlaylistWindow from './windows/RSPlaylistWindow';
 
 const createWindow = () => {
-    const applicationWindow = new BrowserWindow({ width: 800, height: 800, show: false })
-    applicationWindow.loadFile("./index.html")
-    applicationWindow.webContents.on("did-navigate", (_: any, url: string) => {
-        if (url.includes("move-request")) {
-            applicationWindow.webContents.goBack();
-        }
-    })
-
-    const playlistWindow = new BrowserWindow({ width: 800, height: 800, show: false })
-    playlistWindow.loadURL("https://rsplaylist.com/")
+    const applicationWindow = new ApplicationWindow()
+    const playlistWindow = new RSPlaylistWindow()
     playlistWindow.webContents.on("did-navigate", () => {
         playlistWindow.webContents.executeJavaScript("document.querySelector('div.twitch-login-user').innerText").then((user: string) => {
             if (user) {
-                new CyclicalPlaylistManager({ channel: user });
                 playlistWindow.close()
+                applicationWindow.setChannel(user)
                 applicationWindow.show()
             } else {
                 playlistWindow.show()

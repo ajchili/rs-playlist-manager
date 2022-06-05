@@ -6,6 +6,8 @@ The RS Playlist Manager is a NodeJS application that was built to automatically 
 
 - [ ] Add React
 - [ ] Create artifact
+- [ ] Add more playlist options
+- [ ] Add way to change current playlist type
 
 ## Restrictions
 
