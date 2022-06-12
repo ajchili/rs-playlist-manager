@@ -4,6 +4,7 @@
     "noImplicitAny": true,
     "sourceMap": true,
     "outDir": "dist",
+    "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
       "*": [
@@ -13,7 +14,6 @@
     "target": "esnext"
   },
   "include": [
-    "src/**/*",
-    "index.html"
+    "src/**/*"
   ]
 }

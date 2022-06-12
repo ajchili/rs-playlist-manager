@@ -6,7 +6,12 @@ export default class ApplicationWindow extends BrowserWindow {
 
   constructor() {
     super({ width: 800, height: 800, show: false })
-    this.loadFile("./index.html")
+    console.log(process.env)
+    if (process.env.NODE_ENV == "dev") {
+      this.loadURL("http://localhost:3000")
+    } else {
+      this.loadFile("./index.html")
+    }
     this.webContents.on("did-navigate", (_: any, url: string) => {
       if (url.includes("move-request")) {
         this.webContents.goBack()
