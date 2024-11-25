@@ -1,3 +1,3 @@
-import CyclicalPlaylistManager from './src/playlists/CyclicalPlaylistManager';
+import CyclicalPlaylistManager from "./src/playlists/CyclicalPlaylistManager";
 
 new CyclicalPlaylistManager();

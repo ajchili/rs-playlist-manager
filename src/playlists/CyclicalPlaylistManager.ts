@@ -1,5 +1,5 @@
-import PlaylistManager from './PlaylistManager.js';
-import { PriorityQueue } from '../utils/PriorityQueue.js';
+import PlaylistManager from "./PlaylistManager.js";
+import { PriorityQueue } from "../utils/PriorityQueue.js";
 
 type ViewerRequestStatistics = {
   lastRequestPlayed: number;
@@ -97,7 +97,7 @@ export default class CyclicalPlaylistManager extends PlaylistManager {
       const currentSongWasNotPlayed = !!playlist.find(
         (song) =>
           song.id === this.currentSong.id &&
-          song.viewer.twitch_id === this.currentSong.viewer.twitch_id
+          song.viewer.twitch_id === this.currentSong.viewer.twitch_id,
       );
       if (currentSongWasNotPlayed) {
         this.currentSong = undefined;
@@ -124,7 +124,7 @@ export default class CyclicalPlaylistManager extends PlaylistManager {
       const priority = song.vip ? 1 : 0;
       this.viewerRequestData[viewer.twitch_id].songsInQueue.insert(
         song,
-        priority
+        priority,
       );
     }
   }

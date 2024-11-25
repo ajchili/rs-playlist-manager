@@ -1,4 +1,4 @@
-import * as puppeteer from 'puppeteer';
+import * as puppeteer from "puppeteer";
 
 export default class BrowserHandler {
   private browser: puppeteer.Browser;
@@ -9,7 +9,7 @@ export default class BrowserHandler {
 
   public async newPage(): Promise<puppeteer.Page> {
     if (!this.browser) {
-      throw new Error('Unable to create a new page, browser does not exist!');
+      throw new Error("Unable to create a new page, browser does not exist!");
     }
     return await this.browser.newPage();
   }

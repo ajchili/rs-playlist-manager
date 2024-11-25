@@ -1,8 +1,8 @@
-import * as puppeteer from 'puppeteer';
+import * as puppeteer from "puppeteer";
 
-import BrowserHandler from '../puppeteer/BrowserHandler.js';
-import selectors from '../utils/selectors.js';
-import { RS_PLAYLIST_URL } from '../utils/constants.js';
+import BrowserHandler from "../puppeteer/BrowserHandler.js";
+import selectors from "../utils/selectors.js";
+import { RS_PLAYLIST_URL } from "../utils/constants.js";
 
 export interface PlaylistManagerOptions {
   authenticationRefreshInterval?: number;
@@ -22,7 +22,7 @@ export default abstract class PlaylistManager {
     options: PlaylistManagerOptions = {
       authenticationRefreshInterval: 1500,
       playlistRefreshInterval: 1000,
-    }
+    },
   ) {
     this.authenticationRefreshInterval = options.authenticationRefreshInterval;
     this.playlistRefreshInterval = options.playlistRefreshInterval;
@@ -42,7 +42,7 @@ export default abstract class PlaylistManager {
         if (this.page.url() === RS_PLAYLIST_URL) {
           const isLoggedIn = await this.isLoggedIn();
           if (!isLoggedIn) {
-            console.log('Please login to RS Playlist...');
+            console.log("Please login to RS Playlist...");
           } else {
             this.username = await this.getTwitchLoginUserName();
             await this.page.goto(`${RS_PLAYLIST_URL}playlist/${this.username}`);
@@ -59,12 +59,12 @@ export default abstract class PlaylistManager {
   private async getPlaylist(): Promise<Playlist> {
     try {
       const response = await fetch(
-        `${RS_PLAYLIST_URL}ajax/playlist.php?channel=${this.username}`
+        `${RS_PLAYLIST_URL}ajax/playlist.php?channel=${this.username}`,
       );
       const text = await response.text();
-      return JSON.parse(text)['playlist'];
+      return JSON.parse(text)["playlist"];
     } catch (err) {
-      console.log('Unable to update playlist!');
+      console.log("Unable to update playlist!");
       console.error(err);
       return [];
     }
@@ -90,7 +90,7 @@ export default abstract class PlaylistManager {
   private async getTwitchLoginUserName(): Promise<string> {
     if (await this.isLoggedIn()) {
       const el = await this.page.$(selectors.twitchLoginUserNameSelector);
-      const handle = await el.getProperty('textContent');
+      const handle = await el.getProperty("textContent");
       return (await handle.jsonValue()) as string;
     }
     return undefined;
@@ -101,7 +101,7 @@ export default abstract class PlaylistManager {
 
   protected async updateSongOrder(id: number, pos: number): Promise<void> {
     await this.page.goto(
-      `${RS_PLAYLIST_URL}ajax/requests.php?action=move-request&id=${id}&pos=${pos}&channel=${this.username}`
+      `${RS_PLAYLIST_URL}ajax/requests.php?action=move-request&id=${id}&pos=${pos}&channel=${this.username}`,
     );
   }
 }
