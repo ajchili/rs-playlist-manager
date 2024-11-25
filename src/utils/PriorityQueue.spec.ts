@@ -1,6 +1,6 @@
 import { expect, it } from "vitest";
 
-import { PriorityQueue } from "./PriorityQueue";
+import { PriorityQueue } from "./PriorityQueue.js";
 
 it("does not have any items in it when initialized", () => {
   const queue = new PriorityQueue();

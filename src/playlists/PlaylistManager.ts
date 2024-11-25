@@ -1,8 +1,8 @@
 import * as puppeteer from 'puppeteer';
 
-import BrowserHandler from '../puppeteer/BrowserHandler';
-import selectors from '../utils/selectors';
-import { RS_PLAYLIST_URL } from '../utils/constants';
+import BrowserHandler from '../puppeteer/BrowserHandler.js';
+import selectors from '../utils/selectors.js';
+import { RS_PLAYLIST_URL } from '../utils/constants.js';
 
 export interface PlaylistManagerOptions {
   authenticationRefreshInterval?: number;

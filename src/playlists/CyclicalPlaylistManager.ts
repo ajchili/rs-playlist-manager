@@ -1,5 +1,5 @@
-import PlaylistManager from './PlaylistManager';
-import { PriorityQueue } from '../utils/PriorityQueue';
+import PlaylistManager from './PlaylistManager.js';
+import { PriorityQueue } from '../utils/PriorityQueue.js';
 
 type ViewerRequestStatistics = {
   lastRequestPlayed: number;
