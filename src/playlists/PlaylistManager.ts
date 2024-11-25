@@ -96,6 +96,7 @@ export default abstract class PlaylistManager {
     return undefined;
   }
 
+  // eslint-disable-next-line no-unused-vars
   protected abstract onPlaylistUpdate(playlist: Playlist): Promise<void>;
 
   protected async updateSongOrder(id: number, pos: number): Promise<void> {
