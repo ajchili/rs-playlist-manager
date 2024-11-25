@@ -1,6 +1,15 @@
 # rs-playlist-manager
 
-The RS Playlist Manager is a NodeJS application that was built to automatically sort viewer requests to reduce strain on streamers and their moderators.
+The RockSmith Playlist Manager is a NodeJS application that was built to automatically sort viewer requests to reduce strain on streamers and their moderators within [RSPlaylist](https://rsplaylist.com/).
+
+## How to use
+
+1. Download [NodeJS](https://nodejs.org/en/).
+2. Clone the repository.
+3. Run `npm install`.
+4. Run `npm run dev`.
+5. Authenticate via Twitch.
+6. Sit back and relax (so long as the application does not crash).
 
 ## Limitations
 
@@ -23,12 +32,3 @@ The RS Playlist Manager is a NodeJS application that was built to automatically 
 1. Copy the link which chrome outputs (e.g. `ws://127.0.0.1:9222/devtools/browser/90427eee-2680-4ff6-a3f7-c81908439484`)
 1. Start `rs-playlist-manager`
    - `CHROME_REMOTE_DEBUGGER_URL=YOUR_URL npm run dev`
-
-## How to use
-
-1. Download [NodeJS](https://nodejs.org/en/).
-2. Clone the repository.
-3. Run `npm install`.
-4. Run `npm run dev`.
-5. Authenticate via Twitch.
-6. Sit back and relax (so long as the application does not crash).
