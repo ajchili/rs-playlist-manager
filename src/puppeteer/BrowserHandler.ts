@@ -4,7 +4,14 @@ export default class BrowserHandler {
   private browser: puppeteer.Browser;
 
   public async launchBrowser(): Promise<void> {
-    this.browser = await puppeteer.launch({ headless: false });
+    const { CHROME_BROWSER_WS_ENDPOINT: browserWSEndpoint } = process.env;
+
+    // Use user profile if chrome remote debugger endpoint is provided. Otherwise create new browser instance
+    if (browserWSEndpoint) {
+      this.browser = await puppeteer.connect({ browserWSEndpoint });
+    } else {
+      this.browser = await puppeteer.launch({ headless: false });
+    }
   }
 
   public async newPage(): Promise<puppeteer.Page> {
