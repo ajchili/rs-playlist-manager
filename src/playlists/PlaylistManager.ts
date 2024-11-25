@@ -62,7 +62,11 @@ export default abstract class PlaylistManager {
         `${RS_PLAYLIST_URL}ajax/playlist.php?channel=${this.username}`,
       );
       const text = await response.text();
-      return JSON.parse(text)["playlist"];
+      const data = JSON.parse(text)["playlist"];
+      if (Array.isArray(data)) {
+        return data;
+      }
+      return [];
     } catch (err) {
       console.log("Unable to update playlist!");
       console.error(err);
