@@ -34,6 +34,6 @@ export class PriorityQueue<T> {
     if (this.isEmpty) {
       return null;
     }
-    return this.data.pop()[1];
+    return this.data.shift()[1];
   }
 }
