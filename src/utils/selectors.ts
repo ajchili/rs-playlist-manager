@@ -1,3 +1,4 @@
+/* v8 ignore */
 const selectors = {
   twitchLoginUserSelector: "div.twitch-login-user",
   twitchLoginUserNameSelector: "span.twitch-login-user-name",
