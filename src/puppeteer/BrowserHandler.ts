@@ -8,7 +8,13 @@ export default class BrowserHandler {
 
     // Use user profile if chrome remote debugger endpoint is provided. Otherwise create new browser instance
     if (browserWSEndpoint) {
-      this.browser = await puppeteer.connect({ browserWSEndpoint });
+      try {
+        this.browser = await puppeteer.connect({ browserWSEndpoint });
+      } catch (error) {
+        console.log("Unable to connect to existing browser, CHROME_BROWSER_WS_ENDPOINT may be invalid!");
+        console.error(error);
+        process.exit(1);
+      }
     } else {
       this.browser = await puppeteer.launch({ headless: false });
     }
